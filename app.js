@@ -1,155 +1,54 @@
-//Number button selectons
-const one = document.querySelector('#one');
-const two = document.querySelector('#two');
-const three = document.querySelector('#three');
-const four = document.querySelector('#four');
-const five = document.querySelector('#five');
-const six = document.querySelector('#six');
-const seven = document.querySelector('#seven');
-const eight = document.querySelector('#eight');
-const nine = document.querySelector('#nine');
-const zero = document.querySelector('#zero');
+const calculator = document.querySelector('.calculator')
+const keys = calculator.querySelector('.calculator__keys  ')
+const display = calculator.querySelector('.calculator__display')
+
+keys.addEventListener('click', (e) => {
+    if (!e.target.closest('button')) return
+
+    const key =  e.target;
+    const keyValue = key.textContent;
+    const displayValue = display.textContent
+    const type = key.dataset.type;
+    const { previousKeyType } = calculator.dataset
 
 
-// display value
-const displayNum = document.querySelector('.display');
+//Numbers
+    if(type === 'number'){
 
-// operator selections
-const addButton = document.getElementById('add');
-const subButton = document.getElementById('subtract');
-const multiButton = document.getElementById('multiply');
-const divButton = document.getElementById('divide');
-const equalButton = document.getElementById('equals');
-const clearButton = document.getElementById('clear');
+    if(displayValue === '0'){
+        display.textContent = keyValue;
+    }else if (previousKeyType === 'operator') {
+        display.textContent = keyValue
+    }else{
+        display.textContent = displayValue + keyValue
+    }
+    }
 
-let counter = '';
-let operator = null;
-let n1 = null;
-let n2 = null;
-let output = [];
+    //Operators
+    if(type === 'operator'){
+        const operatorKeys = keys.querySelectorAll('[data-type = "operator"]')
+        operatorKeys.forEach(el => {el.dataset.state = '' })
+        key.dataset.state = 'selected'
 
-// operators
-
-addButton.addEventListener('click', function(){
-    operator = add;
-    n1 = Number(counter);
-    counter = '';
-})
-
-subButton.addEventListener('click', function(){
-    operator = subtract;
-    n1 = Number(counter);
-    counter = '';
-})
-
-multiButton.addEventListener('click', function(){
-    operator = multiply;
-    n1 = Number(counter);
-    counter = '';
-})
-
-divButton.addEventListener('click', function(){
-    operator = divide;
-    n1 = Number(counter);
-    counter = '';
-})
-
-equalButton.addEventListener('click', function(){
-    n2 = Number(counter);
-    operate(n1,n2,operator);
-    displayNum.innerText = output[output.length-1];
-})
-
-// Number Buttons
-one.addEventListener('click', function(){
-    counter += "1";
-    displayNum.innerText = counter;
-    
-})
-
-two.addEventListener('click', function(){
-    counter += "2";
-    displayNum.innerText = counter;
-    
-})
-
-three.addEventListener('click', function(){
-    counter += "3";
-    displayNum.innerText = counter;
-    
-})
-
-four.addEventListener('click', function(){
-    counter += "4";
-    displayNum.innerText = counter;
-    
-})
-
-five.addEventListener('click', function(){
-    counter += "5";
-    displayNum.innerText = counter;
-    
-})
-
-six.addEventListener('click', function(){
-    counter += "6";
-    displayNum.innerText = counter;
-    
-})
-
-seven.addEventListener('click', function(){
-    counter += "7";
-    displayNum.innerText = counter;
-    
-})
-
-eight.addEventListener('click', function(){
-    counter += "8";
-    displayNum.innerText = counter;
-    
-})
-
-nine.addEventListener('click', function(){
-    counter += "9";
-    displayNum.innerText = counter;
-    
-})
-
-zero.addEventListener('click', function(){
-    counter += "0";
-    displayNum.innerText = counter;
-    
-})
-
-// ALL Clear Button
-clearButton.addEventListener('click', function(){
-    counter = '';
-    displayNum.innerText = 0;
-})
-
-// Addition 
-function add (n1,n2){
-    return n1 + n2;
+        calculator.dataset.n1 = displayValue
+        calculator.dataset.operator = key.dataset.key
 }
 
-// Subtraction
+    if(type === 'equal'){
+        const n1 =  parseInt(calculator.dataset.n1)
+        const n2 = parseInt(displayValue)
+        const operator = calculator.dataset.operator
+        
+        let result = '';
+        if(operator === 'plus') result = n1 + n2
+        if(operator === 'minus') result = n1 - n2
+        if(operator === 'times') result = n1 * n2
+        if(operator === 'divide') result = n1 / n2
 
-function subtract (n1,n2){
-    return n1 - n2;
-}
+        display.textContent = result
+    }
 
-// Divison
-function divide (n1,n2){
-    return n1 / n2;
-}
+calculator.dataset.previousKeyType = type
 
+})
 
-// Multiplication
-function multiply (n1, n2){
-    return n1 * n2;
-}
-
-function operate (n1,n2,operator){
-    output.push(Number(operator(n1,n2)));
-    return output;
-}

@@ -126,6 +126,23 @@ html {
     grid-area: zero;
 }
 
+
+[data-type="operator"] {
+    background-color: var(--grey-100);
+}
+
+
+[data-type="number"]{
+    background: #fff;
+}
+
+[data-type="operator"]:active,
+[data-type="number"]:active
+{
+    background-color: var(--grey-200);
+}
+
+
 .equal{
     grid-area: equal;
     background-color: var(--orange-400);
@@ -137,19 +154,6 @@ html {
     background-color: var(--orange-500);
 }
 
-
-.operator {
-    background-color: var(--grey-100);
-}
-
-
-.number{
-    background: #fff;
-}
-
-.operator:active,
-.operator:focus,
-.number:active,
-.number:focus{
+[data-state="selected"] {
     background-color: var(--grey-200);
 }
