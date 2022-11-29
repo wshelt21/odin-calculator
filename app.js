@@ -26,6 +26,7 @@ let counter = '';
 let operator = null;
 let n1 = null;
 let n2 = null;
+let output = [];
 
 // operators
 
@@ -55,7 +56,8 @@ divButton.addEventListener('click', function(){
 
 equalButton.addEventListener('click', function(){
     n2 = Number(counter);
-    displayNum.innerText = operate(n1,n2,operator);
+    operate(n1,n2,operator);
+    displayNum.innerText = output[output.length-1];
 })
 
 // Number Buttons
@@ -148,5 +150,6 @@ function multiply (n1, n2){
 }
 
 function operate (n1,n2,operator){
-    return operator(n1,n2);
+    output.push(Number(operator(n1,n2)));
+    return output;
 }
