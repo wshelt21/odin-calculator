@@ -67,10 +67,10 @@ html {
     background: var(--grey-200);
     display: grid;
     gap: 2px;
-    grid-template-columns: repeat(4, auto);
+    grid-template-columns: repeat(4, 1fr);
     grid-template-areas: 
     ". . . ."
-    "seven eight nine equal"
+    "seven eight nine backspace"
     "four five six equal"
     "one two three equal"
     "zero decimal clear equal";
@@ -126,15 +126,24 @@ html {
     grid-area: zero;
 }
 
+.backspace{
+    grid-area: backspace;
+}
+
 
 [data-type="operator"] {
     background-color: var(--grey-100);
 }
 
 
-[data-type="number"]{
+[data-type="number"],
+[data-type="clear"],
+[data-type="decimal"],
+[data-type="backspace"]{   
     background: #fff;
 }
+
+
 
 [data-type="operator"]:active,
 [data-type="number"]:active
